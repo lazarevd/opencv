@@ -201,6 +201,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	HWND desk = GetDesktopWindow();
 	
 //	printf("%s\n", "detector");
+
+
+		printf("%s\n", "main");
+		std::string  names_file = "data/coco.names";
+		std::string  cfg_file = "cfg/yolov3.cfg";
+		std::string  weights_file = "yolov3.weights";
+		std::string filename;
+		printf("%s\n", "detector");
+		Detector detector(cfg_file, weights_file);
+
 //	Detector detector("yolov3-spp-copper.cfg", "yolov3-spp-copper_last.weights");
 	int key = 0;
     switch (message)

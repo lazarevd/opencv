@@ -23,6 +23,8 @@ HINSTANCE hInst;                                // current instance
 WCHAR szTitle[MAX_LOADSTRING];                  // The title bar text
 WCHAR szWindowClass[MAX_LOADSTRING];            // the main window class name
 
+bool isWork = false;
+
 // Forward declarations of functions included in this code module:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
 BOOL                InitInstance(HINSTANCE, int);
@@ -68,6 +70,15 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 }
 
 
+void startDetector() {
+	printf("%s\n", "main");
+	std::string  names_file = "data/coco.names";
+	std::string  cfg_file = "cfg/yolov3.cfg";
+	std::string  weights_file = "yolov3.weights";
+	std::string filename;
+	printf("%s\n", "detector");
+	init("yolov3-spp-copper.cfg", "yolov3-spp-copper_last.weights", 0);
+}
 
 //
 //  FUNCTION: MyRegisterClass()
@@ -77,6 +88,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 ATOM MyRegisterClass(HINSTANCE hInstance)
 {
     WNDCLASSEXW wcex;
+
+
 
     wcex.cbSize = sizeof(WNDCLASSEX);
 
@@ -203,15 +216,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 //	printf("%s\n", "detector");
 
 
-		printf("%s\n", "main");
-		std::string  names_file = "data/coco.names";
-		std::string  cfg_file = "cfg/yolov3.cfg";
-		std::string  weights_file = "yolov3.weights";
-		std::string filename;
-		printf("%s\n", "detector");
-		Detector detector(cfg_file, weights_file);
 
-//	Detector detector("yolov3-spp-copper.cfg", "yolov3-spp-copper_last.weights");
 	int key = 0;
     switch (message)
     {
@@ -222,15 +227,23 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             switch (wmId)
             {
             case IDM_ABOUT:
-
-				while (true) {
+				isWork = true;
+				while (isWork) {
 					Mat img = hwnd2mat(desk,0,0,320,240);
+					//detect_mat(img, bbox_t_container &container);
 					imshow("Capture", img);
 					key = waitKey(20); // need after imshow you can change wait time
 				}
                 //DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
                 break;
-            case IDM_EXIT:
+			
+			case IDM_DETECT:
+				startDetector();
+				break;
+			
+			case IDM_EXIT:
+				isWork = false;
+				cvDestroyWindow("Capture");
                 DestroyWindow(hWnd);
                 break;
             default:

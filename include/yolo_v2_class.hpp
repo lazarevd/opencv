@@ -66,6 +66,7 @@ extern "C" LIB_API bool built_with_cuda();
 extern "C" LIB_API bool built_with_cudnn();
 extern "C" LIB_API bool built_with_opencv();
 extern "C" LIB_API void send_json_custom(char const* send_buf, int port, int timeout);
+extern "C" LIB_API image_t mat_to_image(cv::Mat mat);
 
 class Detector {
     std::shared_ptr<void> detector_gpu_ptr;

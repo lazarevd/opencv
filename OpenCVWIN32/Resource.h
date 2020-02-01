@@ -13,6 +13,7 @@
 #define IDI_OPENCVWIN32			107
 #define IDI_SMALL				108
 #define IDC_OPENCVWIN32			109
+#define IDM_DETECT				110
 #define IDC_MYICON				2
 #ifndef IDC_STATIC
 #define IDC_STATIC				-1
